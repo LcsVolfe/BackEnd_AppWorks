@@ -32,4 +32,5 @@ return [
     'Core',
     'Auth',
     'AdminAPI',
+    'CadastrosAPI',
 ];

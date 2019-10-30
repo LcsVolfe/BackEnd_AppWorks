@@ -2,11 +2,8 @@
 
 namespace Cadastros;
 
-use Cadastros\Service\ContabilidadeService;
-use Cadastros\Service\EmpresaService;
+
 use Cadastros\Service\UsuarioService;
-use Cadastros\Service\TreinamentoService;
-use Cadastros\Service\PlanoService;
 use Cadastros\Service\CheckUserNameService;
 use Cadastros\Service\CheckEmailService;
 use Cadastros\Service\IdentityService;
@@ -30,21 +27,9 @@ return [
         ]
     ],
     'service_manager' => [
-        'factories' => [            
-            'ContabilidadeService' => function ($sm) {
-                return new ContabilidadeService($sm->get('Doctrine\ORM\EntityManager'));
-            },
-            'EmpresaService' => function ($sm) {
-                return new EmpresaService($sm->get('Doctrine\ORM\EntityManager'));
-            },
+        'factories' => [  
             'UsuarioService' => function ($sm) {
                 return new UsuarioService($sm->get('Doctrine\ORM\EntityManager'));
-            },
-            'TreinamentoService' => function ($sm) {
-                return new TreinamentoService($sm->get('Doctrine\ORM\EntityManager'));
-            },
-            'PlanoService' => function ($sm) {
-                return new PlanoService($sm->get('Doctrine\ORM\EntityManager'));
             },
             'CheckUserNameService' => function ($sm) {
                 return new CheckUserNameService($sm->get('Doctrine\ORM\EntityManager'));
