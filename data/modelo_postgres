@@ -1,0 +1,420 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.5
+-- Dumped by pg_dump version 11.5
+
+-- Started on 2019-09-27 11:56:07 -03
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 206 (class 1259 OID 24811)
+-- Name: migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.migrations (
+    version character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.migrations OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 24785)
+-- Name: oauth_access_tokens; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.oauth_access_tokens (
+    access_token character varying(40) NOT NULL,
+    client_id character varying(80) NOT NULL,
+    user_id character varying(255) NOT NULL,
+    expires timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+    scope character varying(2000) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.oauth_access_tokens OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 24773)
+-- Name: oauth_authorization_codes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.oauth_authorization_codes (
+    authorization_code character varying(40) NOT NULL,
+    client_id character varying(80) NOT NULL,
+    user_id character varying(255) DEFAULT NULL::character varying,
+    redirect_uri character varying(2000) DEFAULT NULL::character varying,
+    expires timestamp(0) without time zone NOT NULL,
+    scope character varying(2000) DEFAULT NULL::character varying,
+    id_token character varying(2000) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.oauth_authorization_codes OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 24795)
+-- Name: oauth_clients; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.oauth_clients (
+    client_id character varying(80) NOT NULL,
+    client_secret character varying(80) NOT NULL,
+    redirect_uri character varying(2000) NOT NULL,
+    grant_types character varying(80) DEFAULT NULL::character varying,
+    scope character varying(2000) DEFAULT NULL::character varying,
+    user_id character varying(255) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.oauth_clients OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 24763)
+-- Name: oauth_jwt; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.oauth_jwt (
+    client_id character varying(80) NOT NULL,
+    subject character varying(80) DEFAULT NULL::character varying,
+    public_key character varying(2000) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.oauth_jwt OWNER TO postgres;
+
+--
+-- TOC entry 199 (class 1259 OID 24738)
+-- Name: oauth_refresh_tokens; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.oauth_refresh_tokens (
+    refresh_token character varying(40) NOT NULL,
+    client_id character varying(80) NOT NULL,
+    user_id character varying(255) DEFAULT NULL::character varying,
+    expires timestamp(0) without time zone NOT NULL,
+    scope character varying(2000) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.oauth_refresh_tokens OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 24758)
+-- Name: oauth_roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.oauth_roles (
+    id integer NOT NULL,
+    role character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.oauth_roles OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 24726)
+-- Name: oauth_roles_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.oauth_roles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.oauth_roles_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 24728)
+-- Name: oauth_scopes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.oauth_scopes (
+    scope character varying(255) NOT NULL,
+    type character varying(255) NOT NULL,
+    first_name character varying(2000) DEFAULT NULL::character varying,
+    client_id character varying(80) DEFAULT NULL::character varying,
+    is_default integer NOT NULL
+);
+
+
+ALTER TABLE public.oauth_scopes OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 24748)
+-- Name: oauth_users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.oauth_users (
+    id integer NOT NULL,
+    username character varying(255) NOT NULL,
+    password character varying(2000) NOT NULL,
+    first_name character varying(255) DEFAULT NULL::character varying,
+    email character varying(255) NOT NULL,
+    role_id integer
+);
+
+
+ALTER TABLE public.oauth_users OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 24724)
+-- Name: oauth_users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.oauth_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.oauth_users_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3982 (class 0 OID 24811)
+-- Dependencies: 206
+-- Data for Name: migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.migrations (version) FROM stdin;
+20190927142230
+\.
+
+
+--
+-- TOC entry 3980 (class 0 OID 24785)
+-- Dependencies: 204
+-- Data for Name: oauth_access_tokens; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.oauth_access_tokens (access_token, client_id, user_id, expires, scope) FROM stdin;
+7a66416ef6485f2fdc68ad0b24daacd2719ff7ea	testclient	testuser	2019-09-27 15:46:39	\N
+f45975e4d1b0e097f91e7eeaf887f208fb2ee198	testclient	testuser	2019-09-27 15:50:14	\N
+de6016aac86d59dd42707901c68ce6012429c262	testclient	testuser	2019-09-27 15:50:46	\N
+346700df8515ae4484e674e36e86cd08137fac36	testclient	testuser	2019-09-27 15:50:59	\N
+b32a696b941d5fa79013c5f1f6701246f4022649	testclient	testuser	2019-09-27 15:51:13	\N
+\.
+
+
+--
+-- TOC entry 3979 (class 0 OID 24773)
+-- Dependencies: 203
+-- Data for Name: oauth_authorization_codes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.oauth_authorization_codes (authorization_code, client_id, user_id, redirect_uri, expires, scope, id_token) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3981 (class 0 OID 24795)
+-- Dependencies: 205
+-- Data for Name: oauth_clients; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.oauth_clients (client_id, client_secret, redirect_uri, grant_types, scope, user_id) FROM stdin;
+testclient	$2y$10$5ICo6mbnWLsptjCZVfMu1e7p04FYpgiZydEG1KD4MI8Q2fcwuCu8e	/oauth/receivecode	\N	\N	\N
+testclient2	 	/oauth/receivecode	\N	\N	\N
+\.
+
+
+--
+-- TOC entry 3978 (class 0 OID 24763)
+-- Dependencies: 202
+-- Data for Name: oauth_jwt; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.oauth_jwt (client_id, subject, public_key) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3975 (class 0 OID 24738)
+-- Dependencies: 199
+-- Data for Name: oauth_refresh_tokens; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.oauth_refresh_tokens (refresh_token, client_id, user_id, expires, scope) FROM stdin;
+a73a028fe939603503535f00392b53e72b63bff5	testclient	testuser	2019-10-11 14:46:39	\N
+55278113642e927e9cd3bd245ba0f45bfb332a89	testclient	testuser	2019-10-11 14:50:14	\N
+75f1762ead3c4b573b7b8de28332732f2758dd95	testclient	testuser	2019-10-11 14:50:46	\N
+2cc5130454d351f9ea857c84b7ad1e04e32c15af	testclient	testuser	2019-10-11 14:50:59	\N
+e71fe9b5bea2da81fc1981320526aa973e5f1c07	testclient	testuser	2019-10-11 14:51:13	\N
+\.
+
+
+--
+-- TOC entry 3977 (class 0 OID 24758)
+-- Dependencies: 201
+-- Data for Name: oauth_roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.oauth_roles (id, role) FROM stdin;
+1	admin
+\.
+
+
+--
+-- TOC entry 3974 (class 0 OID 24728)
+-- Dependencies: 198
+-- Data for Name: oauth_scopes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.oauth_scopes (scope, type, first_name, client_id, is_default) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3976 (class 0 OID 24748)
+-- Dependencies: 200
+-- Data for Name: oauth_users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.oauth_users (id, username, password, first_name, email, role_id) FROM stdin;
+1	testuser	$2y$10$5ICo6mbnWLsptjCZVfMu1e7p04FYpgiZydEG1KD4MI8Q2fcwuCu8e	\N	a	1
+\.
+
+
+--
+-- TOC entry 3988 (class 0 OID 0)
+-- Dependencies: 197
+-- Name: oauth_roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.oauth_roles_id_seq', 1, false);
+
+
+--
+-- TOC entry 3989 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: oauth_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.oauth_users_id_seq', 1, false);
+
+
+--
+-- TOC entry 3849 (class 2606 OID 24815)
+-- Name: migrations migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.migrations
+    ADD CONSTRAINT migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- TOC entry 3845 (class 2606 OID 24794)
+-- Name: oauth_access_tokens oauth_access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.oauth_access_tokens
+    ADD CONSTRAINT oauth_access_tokens_pkey PRIMARY KEY (access_token);
+
+
+--
+-- TOC entry 3843 (class 2606 OID 24784)
+-- Name: oauth_authorization_codes oauth_authorization_codes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.oauth_authorization_codes
+    ADD CONSTRAINT oauth_authorization_codes_pkey PRIMARY KEY (authorization_code);
+
+
+--
+-- TOC entry 3847 (class 2606 OID 24805)
+-- Name: oauth_clients oauth_clients_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.oauth_clients
+    ADD CONSTRAINT oauth_clients_pkey PRIMARY KEY (client_id);
+
+
+--
+-- TOC entry 3841 (class 2606 OID 24772)
+-- Name: oauth_jwt oauth_jwt_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.oauth_jwt
+    ADD CONSTRAINT oauth_jwt_pkey PRIMARY KEY (client_id);
+
+
+--
+-- TOC entry 3834 (class 2606 OID 24747)
+-- Name: oauth_refresh_tokens oauth_refresh_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.oauth_refresh_tokens
+    ADD CONSTRAINT oauth_refresh_tokens_pkey PRIMARY KEY (refresh_token);
+
+
+--
+-- TOC entry 3839 (class 2606 OID 24762)
+-- Name: oauth_roles oauth_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.oauth_roles
+    ADD CONSTRAINT oauth_roles_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3832 (class 2606 OID 24737)
+-- Name: oauth_scopes oauth_scopes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.oauth_scopes
+    ADD CONSTRAINT oauth_scopes_pkey PRIMARY KEY (scope);
+
+
+--
+-- TOC entry 3837 (class 2606 OID 24756)
+-- Name: oauth_users oauth_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.oauth_users
+    ADD CONSTRAINT oauth_users_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3835 (class 1259 OID 24757)
+-- Name: idx_93804ff819be1b30; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_93804ff819be1b30 ON public.oauth_users USING btree (role_id);
+
+
+--
+-- TOC entry 3850 (class 2606 OID 24806)
+-- Name: oauth_users fk_93804ff819be1b30; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.oauth_users
+    ADD CONSTRAINT fk_93804ff819be1b30 FOREIGN KEY (role_id) REFERENCES public.oauth_roles(id);
+
+
+-- Completed on 2019-09-27 11:56:07 -03
+
+--
+-- PostgreSQL database dump complete
+--
+
