@@ -7,58 +7,46 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  *
- * Plano
+ * EspecialidadePrestador
  *
  * @category Cadastros
  * @package  Entity
  * @author   
  *
  * @ORM\Entity
- * @ORM\Table(name="Plano")
+ * @ORM\Table(name="EspecialidadePrestador")
  *
  */
 
-class Plano extends AbstractEntity
+class EspecialidadePrestador extends AbstractEntity
 {
-
     /**
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type = "integer", name = "id")
-     * @ORM\OneToMany(targetEntity="Contabilidade", mappedBy="Plano")
-     *
      * @var integer
      *
      */
     protected $id;
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
+    /**     
+     * @ORM\ManyToOne(targetEntity="Auth\Entity\oauth_users", inversedBy="id")
      */
-    protected $Nome;
+    protected $usuario;
 
     /**
      * @ORM\Column(type="string")
      *
      * @var string
      */
-    protected $Descricao;
-
-    /**
-     * @ORM\Column(type="integer")
-     *
-     * @var integer 
-     */
-    protected $Limite_De_Empresas;
+    protected $nome_especialidade;
 
     /**
      * @ORM\Column(type="float")
      *
      * @var float
      */
-    protected $Preco;
+    protected $descricao;    
     
 }

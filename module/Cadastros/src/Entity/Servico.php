@@ -4,61 +4,59 @@ namespace Cadastros\Entity;
 
 use Core\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  *
- * Contabilidade
+ * Servico
  *
  * @category Cadastros
  * @package  Entity
  * @author   
  *
  * @ORM\Entity
- * @ORM\Table(name="Contabilidade")
+ * @ORM\Table(name="Servico")
  *
  */
 
-class Contabilidade extends AbstractEntity
+class Servico extends AbstractEntity
 {
+
     
     /**
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type = "integer", name = "id")
-     * @ORM\OneToMany(targetEntity="Empresa", mappedBy="Contabilidade")
-     * @ORM\OneToMany(targetEntity="oauth_users", mappedBy="Contabilidade")
+     * @ORM\OneToMany(targetEntity="oauth_users", mappedBy="servico")
      * @var integer
      *
      */
     protected $id;
-   
+
     /**     
-     * @ORM\ManyToOne(targetEntity="Plano", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="Pagamento", inversedBy="id")
      */
-    protected $Plano;
-    
+    protected $pagamento;
 
     /**
      * @ORM\Column(type="string")
      *
      * @var string
      */
-    protected $Nome_Fantasia;
+    protected $descricao;
 
     /**
      * @ORM\Column(type="string")
      *
      * @var string
      */
-    protected $Razao_Social;
+    protected $avaliacao_descricao;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="float")
      *
-     * @var string
+     * @var float
      */
-    protected $Cnpj;
+    protected $avaliacao_nota;
     
 }

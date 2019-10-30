@@ -7,18 +7,18 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  *
- * Treinamento
+ * AvaliacaoPrestador
  *
  * @category Cadastros
  * @package  Entity
  * @author   
  *
  * @ORM\Entity
- * @ORM\Table(name="Treinamento")
+ * @ORM\Table(name="AvaliacaoPrestador")
  *
  */
 
-class Treinamento extends AbstractEntity
+class AvaliacaoPrestador extends AbstractEntity
 {
     /**
      *
@@ -30,25 +30,23 @@ class Treinamento extends AbstractEntity
      */
     protected $id;
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
+    /**     
+     * @ORM\ManyToOne(targetEntity="Auth\Entity\oauth_users", inversedBy="id")
      */
-    protected $Titulo;
+    protected $usuario;
 
     /**
      * @ORM\Column(type="string")
      *
      * @var string
      */
-    protected $Status;
+    protected $comentario;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="float")
      *
-     * @var string
+     * @var float
      */
-    protected $Descricao;
+    protected $nota;    
     
 }

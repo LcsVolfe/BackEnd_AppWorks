@@ -54,7 +54,8 @@
         "psr-4": {
             "Application\\": "module/Application/src/",
             "Core\\": "module/Core/src/",
-            "Auth\\": "module/Auth/src/"
+            "Auth\\": "module/Auth/src/",
+            "Cadastros\\": "module/Cadastros/src/"
         }
     },
     "autoload-dev": {
