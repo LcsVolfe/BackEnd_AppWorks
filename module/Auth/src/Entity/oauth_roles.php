@@ -28,7 +28,6 @@ class oauth_roles extends AbstractEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type = "integer", name = "id")
-     * @ORM\OneToMany(targetEntity="oauth_users", mappedBy="role")
      *  
      * @var integer
      *

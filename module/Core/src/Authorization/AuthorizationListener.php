@@ -28,7 +28,7 @@ class AuthorizationListener
         /**
          * @var ZendDbAdapter
          */
-        $db = $sm->get('oauth_adapter');
+        /*$db = $sm->get('oauth_adapter');
 
         $query = $db->query("    
             select role 
@@ -58,26 +58,26 @@ class AuthorizationListener
         /**
          * Set current scope as role user
          */
-        if (count($roles) > 0) {
-            $authorization->addRole($userId);
-            /**
-             * get resources by roles
-             */
+        // if (count($roles) > 0) {
+        //     $authorization->addRole($userId);
+        //     /**
+        //      * get resources by roles
+        //      */
 
-            $resources = [];
+        //     $resources = [];
 
-            foreach ($roles as $role)
-                $resources = array_merge($this->getResourcesByRole($role, $allResources), $resources);
+        //     foreach ($roles as $role)
+        //         $resources = array_merge($this->getResourcesByRole($role, $allResources), $resources);
 
-            /**
-             * set resources by user
-             */
-            foreach ($resources as $resource => $verbs) {
+        //     /**
+        //      * set resources by user
+        //      */
+        //     foreach ($resources as $resource => $verbs) {
 
-                foreach ($verbs as $verb)
-                    $authorization->allow($userId, $resource, $verb);
-            }
-        }
+        //         foreach ($verbs as $verb)
+        //             $authorization->allow($userId, $resource, $verb);
+        //     }
+        // }
     }
 
     /**

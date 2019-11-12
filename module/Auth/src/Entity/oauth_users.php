@@ -36,14 +36,14 @@ class oauth_users extends AbstractEntity
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @var string
      */
     protected $username;
 
     /**
-     * @ORM\Column(type="string", length=2000)
+     * @ORM\Column(type="string", length=2000, nullable=true)
      *
      * @var string
      */
@@ -57,87 +57,108 @@ class oauth_users extends AbstractEntity
     protected $nome;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string
      */
     protected $email;
 
     /**
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=15, nullable=true)
      *
      * @var string
      */
     protected $cpf;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      *
      * @var string
      */
     protected $telefone;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      *
      * @var string
      */
     protected $cep;
 
     /**
-     * @ORM\Column(type="string", length=40)
+     * @ORM\Column(type="string", length=40, nullable=true)
      *
      * @var string
      */
     protected $cidade;
 
     /**
-     * @ORM\Column(type="string", length=40)
+     * @ORM\Column(type="string", length=40, nullable=true)
      *
      * @var string
      */
     protected $estado;
 
     /**
-     * @ORM\Column(type="string", length=80)
+     * @ORM\Column(type="string", length=80, nullable=true)
      *
      * @var string
      */
     protected $bairro;
 
     /**
-     * @ORM\Column(type="string", length=80)
+     * @ORM\Column(type="string", length=80, nullable=true)
      *
      * @var string
      */
     protected $rua;
 
     /**
-     * @ORM\Column(type="integer")
-     *
-     * @var string
-     */
-    protected $numero;
-
-    /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=200, nullable=true)
      *
      * @var string
      */
     protected $complemento;
 
     /**
-     * @ORM\Column(type="string", length=140)
+     * @ORM\Column(type="string", length=140, nullable=true)
      *
      * @var string
      */
     protected $foto;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    protected $razao_social;
 
     /**
-     * @ORM\ManyToOne(targetEntity="oauth_roles", inversedBy="id")
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
      */
-    protected $role;
+    protected $nome_fantasia; 
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    protected $experiencias;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var string
+     */
+    protected $data_nascimento;
+
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $descricao;
 
 
     /**

@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Auth\Entity\oauth_users;
 use Logs\Service\LogService;
 
-class UsuarioService
+class PrestadorService
 {
     const ENTITY = 'Auth\Entity\oauth_users';
     private $em;
@@ -26,10 +26,13 @@ class UsuarioService
     public function save($data)
     {        
 
-        if($data['id']){
-            $usuario = $this->em->find(self::ENTITY, (int) $data['id']);                   
-        }
-            
+        
+        $usuario = $this->em->find(self::ENTITY, (int) $data['id']);                   
+
+        //log
+        $src = 'put';
+        $alteracao = $usuario;
+    
         if (!$usuario) {   
             $usuario = new oauth_users();
 
@@ -38,7 +41,6 @@ class UsuarioService
             $alteracao = null;
         }
     
-        $data['data_nascimento'] = new \DateTime($data['data_nascimento']);
         $usuario->setData($data);        
         $bcrypt = new Bcrypt();        
         $usuario->password = $bcrypt->create($usuario->password);        
