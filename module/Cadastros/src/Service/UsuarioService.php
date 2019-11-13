@@ -26,10 +26,8 @@ class UsuarioService
     public function save($data)
     {        
 
-        if($data['id']){
-            $usuario = $this->em->find(self::ENTITY, (int) $data['id']);                   
-        }
-            
+        $usuario = $this->em->find(self::ENTITY, (int) $data['id']);          
+                    
         if (!$usuario) {   
             $usuario = new oauth_users();
 
