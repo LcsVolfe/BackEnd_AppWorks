@@ -4,6 +4,7 @@ return [
         'factories' => [
             \CadastrosAPI\V1\Rest\Usuario\UsuarioResource::class => \CadastrosAPI\V1\Rest\Usuario\UsuarioResourceFactory::class,
             \CadastrosAPI\V1\Rest\Prestador\PrestadorResource::class => \CadastrosAPI\V1\Rest\Prestador\PrestadorResourceFactory::class,
+            \CadastrosAPI\V1\Rest\Anuncio\AnuncioResource::class => \CadastrosAPI\V1\Rest\Anuncio\AnuncioResourceFactory::class,
         ],
     ],
     'router' => [
@@ -26,12 +27,22 @@ return [
                     ],
                 ],
             ],
+            'cadastros-api.rest.anuncio' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/anuncio[/:anuncio_id]',
+                    'defaults' => [
+                        'controller' => 'CadastrosAPI\\V1\\Rest\\Anuncio\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'zf-versioning' => [
         'uri' => [
             0 => 'cadastros-api.rest.usuario',
             1 => 'cadastros-api.rest.prestador',
+            2 => 'cadastros-api.rest.anuncio',
         ],
     ],
     'zf-rest' => [
@@ -45,6 +56,7 @@ return [
                 1 => 'PATCH',
                 2 => 'PUT',
                 3 => 'DELETE',
+                4 => 'POST',
             ],
             'collection_http_methods' => [
                 0 => 'GET',
@@ -67,6 +79,7 @@ return [
                 1 => 'PATCH',
                 2 => 'PUT',
                 3 => 'DELETE',
+                4 => 'POST',
             ],
             'collection_http_methods' => [
                 0 => 'GET',
@@ -79,11 +92,35 @@ return [
             'collection_class' => \CadastrosAPI\V1\Rest\Prestador\PrestadorCollection::class,
             'service_name' => 'Prestador',
         ],
+        'CadastrosAPI\\V1\\Rest\\Anuncio\\Controller' => [
+            'listener' => \CadastrosAPI\V1\Rest\Anuncio\AnuncioResource::class,
+            'route_name' => 'cadastros-api.rest.anuncio',
+            'route_identifier_name' => 'anuncio_id',
+            'collection_name' => 'anuncio',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+                4 => 'POST',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \CadastrosAPI\V1\Rest\Anuncio\AnuncioEntity::class,
+            'collection_class' => \CadastrosAPI\V1\Rest\Anuncio\AnuncioCollection::class,
+            'service_name' => 'Anuncio',
+        ],
     ],
     'zf-content-negotiation' => [
         'controllers' => [
             'CadastrosAPI\\V1\\Rest\\Usuario\\Controller' => 'Json',
             'CadastrosAPI\\V1\\Rest\\Prestador\\Controller' => 'HalJson',
+            'CadastrosAPI\\V1\\Rest\\Anuncio\\Controller' => 'Json',
         ],
         'accept_whitelist' => [
             'CadastrosAPI\\V1\\Rest\\Usuario\\Controller' => [
@@ -96,6 +133,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'CadastrosAPI\\V1\\Rest\\Anuncio\\Controller' => [
+                0 => 'application/vnd.cadastros-api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'CadastrosAPI\\V1\\Rest\\Usuario\\Controller' => [
@@ -103,6 +145,10 @@ return [
                 1 => 'application/json',
             ],
             'CadastrosAPI\\V1\\Rest\\Prestador\\Controller' => [
+                0 => 'application/vnd.cadastros-api.v1+json',
+                1 => 'application/json',
+            ],
+            'CadastrosAPI\\V1\\Rest\\Anuncio\\Controller' => [
                 0 => 'application/vnd.cadastros-api.v1+json',
                 1 => 'application/json',
             ],
@@ -134,11 +180,26 @@ return [
                 'route_identifier_name' => 'prestador_id',
                 'is_collection' => true,
             ],
+            \CadastrosAPI\V1\Rest\Anuncio\AnuncioEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'cadastros-api.rest.anuncio',
+                'route_identifier_name' => 'anuncio_id',
+                'hydrator' => \Zend\Hydrator\ArraySerializable::class,
+            ],
+            \CadastrosAPI\V1\Rest\Anuncio\AnuncioCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'cadastros-api.rest.anuncio',
+                'route_identifier_name' => 'anuncio_id',
+                'is_collection' => true,
+            ],
         ],
     ],
     'zf-content-validation' => [
         'CadastrosAPI\\V1\\Rest\\Usuario\\Controller' => [
             'input_filter' => 'CadastrosAPI\\V1\\Rest\\Usuario\\Validator',
+        ],
+        'CadastrosAPI\\V1\\Rest\\Anuncio\\Controller' => [
+            'input_filter' => 'CadastrosAPI\\V1\\Rest\\Anuncio\\Validator',
         ],
     ],
     'input_filter_specs' => [
@@ -297,6 +358,29 @@ return [
                 'filters' => [],
                 'name' => 'data_nascimento',
                 'field_type' => \datetime::class,
+            ],
+        ],
+        'CadastrosAPI\\V1\\Rest\\Anuncio\\Validator' => [
+            0 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'id',
+                'field_type' => 'integer',
+            ],
+            1 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'usuario',
+                'field_type' => 'integer',
+            ],
+            2 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'descricao',
+                'field_type' => 'string',
             ],
         ],
     ],

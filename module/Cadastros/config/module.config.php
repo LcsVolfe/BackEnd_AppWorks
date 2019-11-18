@@ -7,7 +7,7 @@ use Cadastros\Service\UsuarioService;
 use Cadastros\Service\CheckUserNameService;
 use Cadastros\Service\CheckEmailService;
 use Cadastros\Service\IdentityService;
-use Cadastros\Service\LogService;
+use Cadastros\Service\AnuncioService;
 
 use Zend\ServiceManager\Factory\InvokableFactory;
 
@@ -40,8 +40,8 @@ return [
             'IdentityService' => function ($sm) {
                 return new IdentityService($sm->get('Doctrine\ORM\EntityManager'));
             },
-            'LogService' => function ($sm) {
-                return new LogService($sm->get('Doctrine\ORM\EntityManager'));
+            'AnuncioService' => function ($sm) {
+                return new AnuncioService($sm->get('Doctrine\ORM\EntityManager'));
             }
         ]
     ]

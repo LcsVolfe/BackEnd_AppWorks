@@ -29,6 +29,7 @@ class oauth_users extends AbstractEntity
      * @ORM\OneToMany(targetEntity="Pagamento", mappedBy="pagamento")
      * @ORM\OneToMany(targetEntity="Cadastros\Entity\AvaliacaoPrestador", mappedBy="usuario")
      * @ORM\OneToMany(targetEntity="Cadastros\Entity\EspecialidadePrestador", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="Cadastros\Entity\Anuncio", mappedBy="usuario")
      *
      * @var integer
      *
