@@ -39,6 +39,13 @@ class Anuncio extends AbstractEntity
      */
     protected $descricao;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     *
+     * @var integer
+     */
+    protected $categoria;
+
     /**     
      * @ORM\ManyToOne(targetEntity="Auth\Entity\oauth_users", inversedBy="id")
      */

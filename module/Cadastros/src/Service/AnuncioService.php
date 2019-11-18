@@ -54,10 +54,21 @@ class AnuncioService
 
 
     public function fetchAll($params = null)
-    {       
-        $select = $this->em->createQueryBuilder()->select(
-            'anuncio'
-        )->from(self::ENTITY, 'anuncio');        
+    {   
+        $categoria = (int) $_GET['categoria'];
+        $select = $this->em->createQueryBuilder()
+            ->select('anuncio', 'usuario')
+            ->from('Cadastros\Entity\Anuncio', 'anuncio') 
+            ->innerJoin('Auth\Entity\oauth_users', 'usuario')
+            ->where('anuncio.categoria = :categoria')
+            ->andWhere('anuncio.usuario = usuario.id')
+            ->setParameter('categoria', $categoria);
+
+
+        
+        // $select = $this->em->createQueryBuilder()->select(
+        //     'anuncio'
+        // )->from(self::ENTITY, 'anuncio');        
 
         $result = $select->getQuery()->getArrayResult();     
         
