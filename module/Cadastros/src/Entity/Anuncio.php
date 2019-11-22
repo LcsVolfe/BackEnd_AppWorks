@@ -40,6 +40,13 @@ class Anuncio extends AbstractEntity
     protected $descricao;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string
+     */
+    protected $titulo;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      *
      * @var integer

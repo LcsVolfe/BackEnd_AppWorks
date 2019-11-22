@@ -389,6 +389,13 @@ return [
                 'name' => 'categoria',
                 'field_type' => 'integer',
             ],
+            4 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'titulo',
+                'field_type' => 'string',
+            ],
         ],
     ],
 ];

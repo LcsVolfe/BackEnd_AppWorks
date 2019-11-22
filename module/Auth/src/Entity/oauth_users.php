@@ -157,7 +157,7 @@ class oauth_users extends AbstractEntity
 
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $descricao;
 
