@@ -28,12 +28,8 @@ class UsuarioService
 
         $usuario = $this->em->find(self::ENTITY, (int) $data['id']);          
                     
-        if (!$usuario) {   
+        if (!$usuario) {  
             $usuario = new oauth_users();
-
-            //log
-            $src = 'post';
-            $alteracao = null;
         }
     
         $data['data_nascimento'] = new \DateTime($data['data_nascimento']);
@@ -55,16 +51,23 @@ class UsuarioService
         return $usuario;
     }
 
+    function getMetod($name) {
+        return isset($_GET[$name]) ? $_GET[$name] : null;
+    }
+
 
     public function fetchAll($params = null)
     {       
-        $select = $this->em->createQueryBuilder()->select(
-            'oauth_users'
-        )->from(self::ENTITY, 'oauth_users');
-
-        $result = $select->getQuery()->getArrayResult();     
+        $username = $this->getMetod('usuario');                
         
-        return $result;
+        $select = $this->em->createQueryBuilder()->select(
+            'user'
+        )->from(self::ENTITY, 'user')
+        ->where('user.username = :new')
+        ->setParameter('new', $username);
+        $result = $select->getQuery()->getArrayResult(); 
+        
+        return $result;   
     }
 
 

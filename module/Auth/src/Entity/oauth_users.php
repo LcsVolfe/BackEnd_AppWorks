@@ -121,7 +121,7 @@ class oauth_users extends AbstractEntity
     protected $complemento;
 
     /**
-     * @ORM\Column(type="string", length=140, nullable=true)
+     * @ORM\Column(type="blob", nullable=true)
      *
      * @var string
      */

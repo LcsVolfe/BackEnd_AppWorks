@@ -5,6 +5,7 @@ return [
             \CadastrosAPI\V1\Rest\Usuario\UsuarioResource::class => \CadastrosAPI\V1\Rest\Usuario\UsuarioResourceFactory::class,
             \CadastrosAPI\V1\Rest\Prestador\PrestadorResource::class => \CadastrosAPI\V1\Rest\Prestador\PrestadorResourceFactory::class,
             \CadastrosAPI\V1\Rest\Anuncio\AnuncioResource::class => \CadastrosAPI\V1\Rest\Anuncio\AnuncioResourceFactory::class,
+            \CadastrosAPI\V1\Rest\Identity\IdentityResource::class => \CadastrosAPI\V1\Rest\Identity\IdentityResourceFactory::class,
         ],
     ],
     'router' => [
@@ -36,6 +37,15 @@ return [
                     ],
                 ],
             ],
+            'cadastros-api.rest.identity' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/identity[/:identity_id]',
+                    'defaults' => [
+                        'controller' => 'CadastrosAPI\\V1\\Rest\\Identity\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'zf-versioning' => [
@@ -43,6 +53,7 @@ return [
             0 => 'cadastros-api.rest.usuario',
             1 => 'cadastros-api.rest.prestador',
             2 => 'cadastros-api.rest.anuncio',
+            3 => 'cadastros-api.rest.identity',
         ],
     ],
     'zf-rest' => [
@@ -115,12 +126,35 @@ return [
             'collection_class' => \CadastrosAPI\V1\Rest\Anuncio\AnuncioCollection::class,
             'service_name' => 'Anuncio',
         ],
+        'CadastrosAPI\\V1\\Rest\\Identity\\Controller' => [
+            'listener' => \CadastrosAPI\V1\Rest\Identity\IdentityResource::class,
+            'route_name' => 'cadastros-api.rest.identity',
+            'route_identifier_name' => 'identity_id',
+            'collection_name' => 'identity',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \CadastrosAPI\V1\Rest\Identity\IdentityEntity::class,
+            'collection_class' => \CadastrosAPI\V1\Rest\Identity\IdentityCollection::class,
+            'service_name' => 'Identity',
+        ],
     ],
     'zf-content-negotiation' => [
         'controllers' => [
             'CadastrosAPI\\V1\\Rest\\Usuario\\Controller' => 'Json',
             'CadastrosAPI\\V1\\Rest\\Prestador\\Controller' => 'HalJson',
             'CadastrosAPI\\V1\\Rest\\Anuncio\\Controller' => 'Json',
+            'CadastrosAPI\\V1\\Rest\\Identity\\Controller' => 'Json',
         ],
         'accept_whitelist' => [
             'CadastrosAPI\\V1\\Rest\\Usuario\\Controller' => [
@@ -138,6 +172,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'CadastrosAPI\\V1\\Rest\\Identity\\Controller' => [
+                0 => 'application/vnd.cadastros-api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'CadastrosAPI\\V1\\Rest\\Usuario\\Controller' => [
@@ -149,6 +188,10 @@ return [
                 1 => 'application/json',
             ],
             'CadastrosAPI\\V1\\Rest\\Anuncio\\Controller' => [
+                0 => 'application/vnd.cadastros-api.v1+json',
+                1 => 'application/json',
+            ],
+            'CadastrosAPI\\V1\\Rest\\Identity\\Controller' => [
                 0 => 'application/vnd.cadastros-api.v1+json',
                 1 => 'application/json',
             ],
@@ -190,6 +233,18 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'cadastros-api.rest.anuncio',
                 'route_identifier_name' => 'anuncio_id',
+                'is_collection' => true,
+            ],
+            \CadastrosAPI\V1\Rest\Identity\IdentityEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'cadastros-api.rest.identity',
+                'route_identifier_name' => 'identity_id',
+                'hydrator' => \Zend\Hydrator\ArraySerializable::class,
+            ],
+            \CadastrosAPI\V1\Rest\Identity\IdentityCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'cadastros-api.rest.identity',
+                'route_identifier_name' => 'identity_id',
                 'is_collection' => true,
             ],
         ],
