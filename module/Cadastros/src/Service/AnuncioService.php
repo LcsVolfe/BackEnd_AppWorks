@@ -48,6 +48,9 @@ class AnuncioService
         $usuario = $usuario->getArrayCopy();       
 
         $anuncio['usuario'] = array_splice($usuario, 3);
+
+        $anuncio['usuario']['foto'] = base64_encode(stream_get_contents($anuncio['usuario']["foto"]));
+
         return $anuncio;
 
     }
@@ -57,15 +60,22 @@ class AnuncioService
     {   
         $categoria = (int) $_GET['categoria'];
         $select = $this->em->createQueryBuilder()
-            ->select('anuncio')
+            ->select('anuncio', 'u.foto')
             ->from('Cadastros\Entity\Anuncio', 'anuncio') 
+            ->innerJoin('Auth\Entity\oauth_users', 'u') 
             ->where('anuncio.categoria = :categoria')
+            ->andWhere('anuncio.usuario = u.id')
             ->setParameter('categoria', $categoria);
+        $result = $select->getQuery()->getArrayResult();  
+        $return = [];
         
-
-        $result = $select->getQuery()->getArrayResult();     
-        
-        return $result;
+        foreach ($result as $key => $value) {            
+            if($value["foto"]){
+                $value[0]['foto'] = base64_encode(stream_get_contents($value["foto"]));                
+                $return[] = $value[0];  
+            }
+        }
+        return $return;
     }
 
 

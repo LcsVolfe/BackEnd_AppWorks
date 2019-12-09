@@ -35,12 +35,9 @@ class IdentityService
         ->setParameter('token', $token);
         
         $result = $select->getQuery()->getArrayResult();   
-        
-        
-        $result[0]['foto'] = "data:image/png;base64,".stream_get_contents($result[0]['foto']);
+        if($result[0]['foto'])
+            $result[0]['foto'] = base64_encode(stream_get_contents($result[0]['foto']));
 
-        // var_dump(  stream_get_contents($result[0]['foto']) );die;
-        // 
         return $result;
         
     }
